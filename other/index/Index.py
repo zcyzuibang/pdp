@@ -1,7 +1,7 @@
 import pickle as p
 import random
 import linecache
-import datetime
+import time
 import copy
 
 filename = 'new_extraction.csv'
@@ -67,7 +67,7 @@ def Size():
 def Running_time(n):
     dict_Subject_len, dict_Resource_len, dict_Action_len, dict_Condition_len = Size()
     i = 0
-    k_init = datetime.datetime.now()
+    k_init = time.clock()
     k_sum = k_init - k_init
     while i < n:
         int1 = random.randint(0, dict_Subject_len - 1)
@@ -87,17 +87,18 @@ def Running_time(n):
         # index_high = dict_Subject_index[key_Subject][1]
         key_Subject = Subject_get(int1)
 
-        begin = datetime.datetime.now()
+        begin = time.clock()
         index_high = dict_Subject_index[key_Subject][1]
-        end = datetime.datetime.now()
+        end = time.clock()
         k = end - begin
-        k_sum += k
 
+        k_sum += k
+        # print(i,k)
         index_low = index_high - dict_Subject[key_Subject][1] + 1
 
-        begin = datetime.datetime.now()
+        begin = time.clock()
         res = Search(int1_str, int2_str, int3_str, int4_str,index_low,index_high)
-        end = datetime.datetime.now()
+        end = time.clock()
         k = end - begin
         k_sum += k
         # print(k.total_seconds())
@@ -106,8 +107,32 @@ def Running_time(n):
     return k_sum
 
 if __name__=='__main__':
-    k_sum=Running_time(500)
-    print(k_sum.total_seconds())
+    file_record = open('runtime.csv', 'w+')
+    i = 0
+    n = 1
+    str_title = ''
+    for x in range(1, 20):
+        str_title += str(n * 500) + ','
+    str_title += '\n'
+    file_record.writelines(str_title)
+    while i < 100:
+        str_ = ''
+        while n <= 20:
+            k_sum = Running_time(n*500)
+            str_ += str(k_sum) + ','
+            print(k_sum)
+            n += 1
+        str_ += '\n'
+        file_record.writelines(str_)
+        n = 1
+        i += 1
+    file_record.close()
+    # k_sum=Running_time(500)
+    # print(k_sum)
+    # begin = time.clock()
+    # end = time.clock()
+    # print(begin,end,end-begin)
+
     # print(Subject_get(11))
     # key_Subject = Subject_get(10)
     #

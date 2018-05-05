@@ -1,7 +1,8 @@
 import pickle as p
 import random
 import linecache
-import datetime
+import time
+from decimal import *
 
 filename = 'new_extraction.csv'
 myfile = open(filename)
@@ -42,21 +43,27 @@ def Size():
 def Running_time(n):
     dict_Subject_len, dict_Resource_len, dict_Action_len, dict_Condition_len = Size()
     i = 0
-    k_init = datetime.datetime.now()
+    k_init = time.time()
+    # print(k_init)
     k_sum = k_init - k_init
     while i < n:
         int1 = random.randint(0, dict_Subject_len - 1)
         int2 = random.randint(0, dict_Resource_len - 1)
         int3 = random.randint(0, dict_Action_len - 1)
         int4 = random.randint(0, dict_Condition_len - 1)
+        # int1 = 0
+        # int2 = 0
+        # int3 = 0
+        # int4 = 0
         int1_str = str(int1)
         int2_str = str(int2)
         int3_str = str(int3)
         int4_str = str(int4)
-        begin = datetime.datetime.now()
+        begin = time.clock()
         res = Search(int1_str, int2_str, int3_str, int4_str)
-        end = datetime.datetime.now()
+        end = time.clock()
         k = end - begin
+        # print(k)
         k_sum += k
         # print(k.total_seconds())
         # print(int1_str + ' ' + int2_str + ' ' + int3_str + ' ' + int4_str + ' ' + res)
@@ -65,4 +72,11 @@ def Running_time(n):
 
 if __name__=='__main__':
     k_sum=Running_time(500)
-    print(k_sum.total_seconds())
+    print(k_sum)
+    # print(k_sum.total_seconds())
+    # print(time.clock())
+    # time.clock()
+    # t=time.clock();
+    # print(Decimal(time.time()))
+    # print(time.time(), time.clock())
+
