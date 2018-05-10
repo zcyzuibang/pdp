@@ -4,7 +4,6 @@ input_file = open('new_extraction.csv')
 output_file = open('new_extractionSorted.csv','w')
 
 table = []
-#header = input_file.readline() #读取并弹出第一行
 for line in input_file:
     line = line.strip()
     col = line.split(',') #每行分隔为列表，好处理列格式
@@ -15,7 +14,7 @@ for line in input_file:
     col[4] = int(col[4]) #各行没有先strip 末位是\n
     table.append(col) #嵌套列表table[[8,8][*,*],...]
 
-table_sorted = sorted(table, key=itemgetter(4,1,2,3))#先后按列索引3,4排序
+table_sorted = sorted(table, key=itemgetter(1,2,3,4))#先后按列索引1,2,3,4排序
 
 #output_file.write(header + '\t')
 for row in table_sorted:                    #遍历读取排序后的嵌套列表
